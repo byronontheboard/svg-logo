@@ -1,5 +1,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
+const { Circle, Square, Triangle } = require('./lib/shapes')
+const SVG = require('./lib/svg')
 
 class svgMaker {
     async run() {
@@ -80,4 +82,5 @@ function logoPrompt() {
 
 logoPrompt().then(res => {
     console.log(res);
+    svgMaker()
 });
