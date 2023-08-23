@@ -3,6 +3,8 @@ const fs = require('fs');
 const { Circle, Square, Triangle } = require('./lib/shapes')
 const SVG = require('./lib/svg')
 
+// return writeFile("logo.svg", svg.render());
+
 class svgMaker {
     async run() {
       try {
@@ -77,9 +79,10 @@ function logoPrompt() {
         name: 'shapeColor',
         message: 'In regards to the decided shape, would you please pick a color(hexadecimal numbers are accepted as well)?',
         },
-    ]);
-};
-
+      ]);
+      
+    };
+    
 logoPrompt().then(res => {
     console.log(res);
     svgMaker()
