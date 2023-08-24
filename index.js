@@ -3,8 +3,6 @@ const fs = require('fs');
 const { Circle, Square, Triangle } = require('./lib/shapes')
 const SVG = require('./lib/svg')
 
-// return writeFile("logo.svg", svg.render());
-
 class svgMaker {
   async run({ text, textColor, shape, shapeColor }) {
       try {
@@ -43,16 +41,15 @@ class svgMaker {
         const svgData = svg.render();
   
         // Step 7: Write the SVG data to a file named "logo.svg" within the "examples" folder
-        const filePath = 'examples/logo.svg'; // Path inside the examples folder
+          // Path into the examples folder
+        const filePath = 'examples/logo.svg'; 
         fs.writeFileSync(filePath, svgData);
-        // fs.writeFileSync('logo.svg', svgData);
 
         // Step 8: Log a success message
         console.log(`Generated ${filePath}`);
-        // console.log('Generated logo.svg');
-      } catch (error) {
-
+        
         // Step 9: Handle any errors that occur during the process
+      } catch (error) {
         console.error(error);
         console.log('Oops! Something went wrong.');
       }
