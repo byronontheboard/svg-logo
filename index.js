@@ -6,13 +6,12 @@ const SVG = require('./lib/svg')
 // return writeFile("logo.svg", svg.render());
 
 class svgMaker {
-    async run() {
+  async run({ text, textColor, shape, shapeColor }) {
       try {
-        const { text, textColor, shape, shapeColor } = await this.logoPrompt();
   
         let shapeInstance;
   
-        // Step 1: Determine the shape based on shapeType
+        // Step 1: Determine the shape type
         switch (shape) {
           case 'Circle':
               // Create a Circle instance
@@ -29,14 +28,13 @@ class svgMaker {
         }
   
         // Step 2: Set the color of the shape
-        shapeInstance.setColor(shapeColor);
+        shapeInstance.setShapeColor(shapeColor);
   
         // Step 3: Create an SVG container
         const svg = new SVG();
   
-        // Step 4: Set the text and text color in the SVG container
-        svg.setText(text, textColor);
-        // svg.setShape(shapeInstance);
+        // Step 4: Set the text and text color in the SVG container & pass the shape type
+        svg.setText(text, textColor, shape);
   
         // Step 5: Set the shape in the SVG container
         svg.setShape(shapeInstance);
@@ -44,12 +42,16 @@ class svgMaker {
         // Step 6: Generate the SVG data by rendering the SVG container
         const svgData = svg.render();
   
-        // Step 7: Write the SVG data to a file named "logo.svg"
-        fs.writeFileSync('logo.svg', svgData);
-  
+        // Step 7: Write the SVG data to a file named "logo.svg" within the "examples" folder
+        const filePath = 'examples/logo.svg'; // Path inside the examples folder
+        fs.writeFileSync(filePath, svgData);
+        // fs.writeFileSync('logo.svg', svgData);
+
         // Step 8: Log a success message
-        console.log('Generated logo.svg');
+        console.log(`Generated ${filePath}`);
+        // console.log('Generated logo.svg');
       } catch (error) {
+
         // Step 9: Handle any errors that occur during the process
         console.error(error);
         console.log('Oops! Something went wrong.');
@@ -84,7 +86,14 @@ function logoPrompt() {
       
     };
     
-logoPrompt().then(res => {
-    console.log(res);
-    svgMaker()
-});
+(async () => {
+  try {
+      const res = await logoPrompt();
+      console.log(res);
+      
+      const svgMakerInstance = new svgMaker();
+      await svgMakerInstance.run(res);
+  } catch (error) {
+      console.error(error);
+  }
+})();
