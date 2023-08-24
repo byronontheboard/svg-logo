@@ -36,6 +36,7 @@ class svgMaker {
   
         // Step 4: Set the text and text color in the SVG container
         svg.setText(text, textColor);
+        // svg.setShape(shapeInstance);
   
         // Step 5: Set the shape in the SVG container
         svg.setShape(shapeInstance);
